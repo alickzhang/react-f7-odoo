@@ -30,28 +30,22 @@ import {
 
 import { routes } from './routes'
 
+let currentRoute
+
+export const getCurrentRoute = () => currentRoute
+
 const MainViews = (props, context) => {
   return (
     <Views>
-      <View id="main-view" navbarThrough dynamicNavbar={true} main url="/">
-        {context.framework7AppContext.theme.ios ? (
-          <Navbar>
-            <NavLeft>
-              <Link icon="fa fa-bars" openPanel="left" />
-            </NavLeft>
-            <NavCenter sliding>Framework7</NavCenter>
-          </Navbar>
-        ) : null}
+      <View id="main-view">
         <Pages>
           <Page>
-            {context.framework7AppContext.theme.material ? (
-              <Navbar>
-                <NavLeft>
-                  <Link icon="fa fa-bars" openPanel="left" />
-                </NavLeft>
-                <NavCenter sliding>Framework7</NavCenter>
-              </Navbar>
-            ) : null}
+            <Navbar>
+              <NavLeft>
+                <Link icon="fa fa-bars" openPanel="left" />
+              </NavLeft>
+              <NavCenter sliding>Odoo</NavCenter>
+            </Navbar>
             <List>
               <ListItem link="/contacts/" title="Contacts"></ListItem>
               <ListItem link="/form/" title="Form"></ListItem>
@@ -144,7 +138,7 @@ const AppLoginScreen = () => (
 )
 
 export const App = () => (
-  <Framework7App themeType="ios" routes={routes}>
+  <Framework7App themeType="ios" onRouteChange={route => currentRoute = route} routes={routes}>
     <Statusbar />
     <LeftPanel />
     <MainViews />

@@ -9,16 +9,19 @@ import {
   Searchbar,
   List,
   ListItem,
+  Popup,
 } from 'framework7-react'
 
 import request from '../common/request'
 import config from '../common/config'
+import PartnerComponent from '../components/PartnerComponent'
 
 class Contact extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      contacts: []
+      contacts: [],
+      partnerPopupOpened: false
     }
   }
 
@@ -49,10 +52,27 @@ class Contact extends Component {
     })
   }
 
+  openPopup() {
+    this.setState({
+      partnerPopupOpened: true
+    })
+  }
+
+  closePopup() {
+    this.setState({
+      partnerPopupOpened: false
+    })
+  }
+
+  onClickSave() {
+    console.log('save')
+    this.closePopup()
+  }
+
   render() {
     const { contacts } = this.state
     const listItems = contacts.map(contact =>
-      <ListItem key={contact.id} link="/">
+      <ListItem key={contact.id} link={"/contact/" + contact.id}>
         <img className="avatar" src={"data:image/jpeg;base64," + contact.image} width="60" alt="" />
         <div className="details">
           <div className="item-title heading">{contact.name}</div>
@@ -69,26 +89,49 @@ class Contact extends Component {
           </NavLeft>
           <NavCenter>Contacts</NavCenter>
           <NavRight>
-            <Link icon="fa fa-plus" />
+            <Link icon="fa fa-plus" onClick={this.openPopup.bind(this)} />
           </NavRight>
         </Navbar>
-        <Searchbar
-          cancelLink="Cancel"
-          searchList="#search-list"
-          clearButton="true"
-          placeHolder="Search in contacts"
+        <div>
+          <Searchbar
+            cancelLink="Cancel"
+            searchList="#search-list"
+            clearButton="true"
+            placeholder="Search in contacts"
+          />
+          <List className="searchbar-not-found">
+            <ListItem className="text" title="Nothing found" />
+          </List>
+          <List className="searchbar-found" id="search-list">
+          {
+            listItems
+          }
+          </List>
+        </div>
+
+        <PartnerPopup
+          partnerPopupOpened={this.state.partnerPopupOpened}
+          closePopup={this.closePopup.bind(this)}
+          onClickSave={this.onClickSave.bind(this)}
         />
-        <List className="searchbar-not-found">
-          <ListItem title="Nothing found" />
-        </List>
-        <List className="searchbar-found" id="search-list">
-        {
-          listItems
-        }
-        </List>
+
       </Page>
     )
   }
 }
+
+const PartnerPopup = (props) => (
+  <Popup opened={props.partnerPopupOpened}>
+    <Navbar>
+      <NavLeft>
+        <Link onClick={props.closePopup}>Cancel</Link>
+      </NavLeft>
+      <NavRight>
+        <Link onClick={props.onClickSave}>Save</Link>
+      </NavRight>
+    </Navbar>
+    <PartnerComponent />
+  </Popup>
+)
 
 export default Contact

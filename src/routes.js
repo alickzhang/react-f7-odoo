@@ -1,6 +1,6 @@
 import Form from './views/Form'
 import Contact from './views/Contact'
-import About from './views/About'
+import Partner from './views/Partner'
 
 export const routes = [
   {
@@ -12,7 +12,7 @@ export const routes = [
     component: Contact
   },
   {
-    path: '/about/',
-    component: About
+    path: '/contact/:partnerId',
+    component: Partner
   }
 ]
