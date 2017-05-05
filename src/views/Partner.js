@@ -17,27 +17,35 @@ class Partner extends Component {
     const { partnerId } = this.props
     this.state = {
       partnerId: partnerId,
-      partner: {}
+      partner: {},
+      partnerDataFetched: false,
+      editing: false,
     }
   }
 
   componentWillMount() {
-    this.fetchContact()
+    this.fetchPartner()
   }
 
-  fetchContact() {
+  fetchPartner() {
     const url = config.api.base + config.api.contacts + '/' + this.state.partnerId
     request.get(url, {
       session_id: '280d3edacce85fe83d4d86830a334550986c9914'
     }).then(data => {
       if (data && data.success) {
-        console.log(data.partner)
         this.setState({
-          partner: data.partner
+          partner: data.partner,
+          partnerDataFetched: true
         })
       }
     }).catch(err => {
       console.error(err)
+    })
+  }
+
+  onClickEdit() {
+    this.setState({
+      editing: !this.state.editing
     })
   }
 
@@ -53,26 +61,30 @@ class Partner extends Component {
           <NavLeft>
             <Link back icon="fa fa-chevron-left">Contacts</Link>
           </NavLeft>
-          <NavRight>
-            <Link>Edit</Link>
+          <NavRight className="nav-right-text">
+            <Link onClick={this.onClickEdit.bind(this)}>{!this.state.editing ? "Edit" : "Save"}</Link>
           </NavRight>
         </Navbar>
-        <PartnerComponent
-          name={name}
-          function={partnerFunction}
-          supplier={supplier}
-          customer={customer}
-          phone={phone}
-          mobile={mobile}
-          email={email}
-          website={website}
-          country={country}
-          city={city}
-          zip={zip}
-          street={street}
-          opportunities={opportunities}
-          sales={sales}
-        />
+        {
+          this.state.partnerDataFetched &&
+          <PartnerComponent
+            name={name}
+            function={partnerFunction}
+            supplier={supplier}
+            customer={customer}
+            phone={phone}
+            mobile={mobile}
+            email={email}
+            website={website}
+            country={country}
+            city={city}
+            zip={zip}
+            street={street}
+            opportunities={opportunities}
+            sales={sales}
+            editing={this.state.editing}
+          />
+        }
       </Page>
     )
   }

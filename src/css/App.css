@@ -8,6 +8,7 @@
 }
 
 .navbar a.back i {
+  margin-left: 7px;
   margin-right: 5px;
 }
 
@@ -35,9 +36,29 @@ body.with-panel-left-reveal .views {
 }
 
 .content-block-title {
-  /*margin: 15px 15px 0;*/
-  margin-top: 20px;
+  margin: 10px 15px;
+  /*margin-top: 20px;*/
   color: #3399cc;
+}
+
+.label-switch input[type=checkbox]:checked+.checkbox {
+  background: #3399cc;
+}
+
+.searchbar-cancel {
+  color: #3399cc;
+}
+
+.nav-left-text {
+  margin-left: 7px;
+}
+
+.nav-right-text {
+  margin-right: 7px;
+}
+
+.popup {
+  background: #efeff4;
 }
 
 .avatar {

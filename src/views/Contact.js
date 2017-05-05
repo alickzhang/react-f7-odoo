@@ -123,14 +123,14 @@ class Contact extends Component {
 const PartnerPopup = (props) => (
   <Popup opened={props.partnerPopupOpened}>
     <Navbar>
-      <NavLeft>
+      <NavLeft className="nav-left-text">
         <Link onClick={props.closePopup}>Cancel</Link>
       </NavLeft>
-      <NavRight>
+      <NavRight className="nav-right-text">
         <Link onClick={props.onClickSave}>Save</Link>
       </NavRight>
     </Navbar>
-    <PartnerComponent />
+    <PartnerComponent editing={true} />
   </Popup>
 )
 

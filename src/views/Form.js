@@ -32,12 +32,19 @@ class Form extends Component {
                 <ContentBlockTitle>Form</ContentBlockTitle>
                 <List form>
                     <ListItem>
+                      <FormLabel>Customer</FormLabel>
+                      <FormInput
+                        type="switch"
+                        checked={true}
+                      />
+                    </ListItem>
+                    <ListItem>
                         <FormLabel>Name</FormLabel>
-                        <FormInput type="text" placeholder="Name" />
+                        <FormInput type="text" placeholder="Name" readonly={true} />
                     </ListItem>
                     <ListItem>
                         <FormLabel>Password</FormLabel>
-                        <FormInput type="password" placeholder="Password" />
+                        <FormInput type="password" placeholder="Password" readonly="readonly" />
                     </ListItem>
                     <ListItem>
                         <FormLabel>E-mail</FormLabel>
