@@ -4,7 +4,7 @@ export const FormInput = (props) => (
   <div className="item-input">
     {
       props.type === 'switch' ?
-      <label className="label-switch">
+      <label className="label-switch no-fastclick">
         <input
           type="checkbox"
           checked={props.checked}

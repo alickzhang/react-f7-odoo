@@ -6,6 +6,8 @@ import {
   FormLabel,
 } from 'framework7-react'
 
+import request from '../common/request'
+import config from '../common/config'
 import { FormInput } from './FormInput'
 
 class PartnerComponent extends Component {
@@ -32,7 +34,21 @@ class PartnerComponent extends Component {
       street: street,
       opportunities: opportunities,
       sales: sales,
+      session_id: '280d3edacce85fe83d4d86830a334550986c9914',
     }
+  }
+
+  add() {
+    const url = config.api.base + config.api.addContact
+    const body = this.state
+
+    console.log(body)
+
+    request.post(url, body).then(data => {
+      console.log(data)
+    }).catch(err => {
+      console.error(err)
+    })
   }
 
   handleChange(type, event) {
@@ -41,15 +57,13 @@ class PartnerComponent extends Component {
     this.setState(state)
   }
 
-  handleSwitch(event) {
-    console.log('switch')
-    this.setState({
-      supplier: event.target.checked
-    })
+  handleSwitch(type, event) {
+    let state = {}
+    state[type] = event.target.checked
+    this.setState(state)
   }
 
   render() {
-    console.log(this.state.supplier)
     const { editing } = this.props
 
     return (
@@ -82,8 +96,7 @@ class PartnerComponent extends Component {
               type="switch"
               checked={this.state.supplier}
               disabled={!editing}
-              onChange={this.handleSwitch.bind(this)}
-              onClick={this.handleSwitch.bind(this)}
+              onChange={this.handleSwitch.bind(this, 'supplier')}
             />
           </ListItem>
           <ListItem>
@@ -92,6 +105,7 @@ class PartnerComponent extends Component {
               type="switch"
               checked={this.state.customer}
               disabled={!editing}
+              onChange={this.handleSwitch.bind(this, 'customer')}
             />
           </ListItem>
         </List>
@@ -102,7 +116,7 @@ class PartnerComponent extends Component {
             <FormInput
               type="tel"
               placeholder={editing ? "Phone" : null}
-              value={this.state.phone}
+              value={this.state.phone ? this.state.phone : ''}
               onChange={this.handleChange.bind(this, 'phone')}
               readonly={!editing}
             />
@@ -123,7 +137,7 @@ class PartnerComponent extends Component {
               type="email"
               placeholder={editing ? "Email" : null}
               className="text-overflow"
-              value={this.state.email}
+              value={this.state.email ? this.state.email : ''}
               onChange={this.handleChange.bind(this, 'email')}
               readonly={!editing}
             />
@@ -134,7 +148,7 @@ class PartnerComponent extends Component {
               type="url"
               placeholder={editing ? "Website" : null}
               className="text-overflow"
-              value={this.state.website}
+              value={this.state.website ? this.state.email : ''}
               onChange={this.handleChange.bind(this, 'website')}
               readonly={!editing}
             />
@@ -153,7 +167,7 @@ class PartnerComponent extends Component {
             <FormInput
               type="text"
               placeholder={editing ? "City" : null}
-              value={this.state.city}
+              value={this.state.city ? this.state.city : ''}
               onChange={this.handleChange.bind(this, 'city')}
               readonly={!editing}
             />
@@ -163,7 +177,7 @@ class PartnerComponent extends Component {
             <FormInput
               type="number"
               placeholder={editing ? "Zip" : null}
-              value={this.state.zip}
+              value={this.state.zip ? this.state.zip : ''}
               onChange={this.handleChange.bind(this, 'zip')}
               readonly={!editing}
             />
@@ -173,7 +187,7 @@ class PartnerComponent extends Component {
             <FormInput
               type="text"
               placeholder={editing ? "Street" : null}
-              value={this.state.street}
+              value={this.state.street ? this.state.street : ''}
               onChange={this.handleChange.bind(this, 'street')}
               readonly={!editing}
             />

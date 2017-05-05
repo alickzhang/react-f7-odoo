@@ -8,9 +8,10 @@ export default {
   },
 
   api: {
-    // base: 'http://localhost:8069/',
-    base: 'http://192.168.1.58:8069/',
+    base: 'http://localhost:8069/',
+    // base: 'http://192.168.1.58:8069/',
     contacts: 'contacts',
+    addContact: 'contacts/add',
     login: 'login',
   },
 

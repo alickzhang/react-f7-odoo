@@ -14,6 +14,7 @@ import {
 
 import request from '../common/request'
 import config from '../common/config'
+import { avatar } from '../common/util'
 import PartnerComponent from '../components/PartnerComponent'
 
 class Contact extends Component {
@@ -65,7 +66,7 @@ class Contact extends Component {
   }
 
   onClickSave() {
-    console.log('save')
+    this.partnerPopup.add()
     this.closePopup()
   }
 
@@ -73,7 +74,7 @@ class Contact extends Component {
     const { contacts } = this.state
     const listItems = contacts.map(contact =>
       <ListItem key={contact.id} link={"/contact/" + contact.id}>
-        <img className="avatar" src={"data:image/jpeg;base64," + contact.image} width="60" alt="" />
+        <img className="avatar" src={avatar(contact.image)} width="60" alt="" />
         <div className="details">
           <div className="item-title heading">{contact.name}</div>
           <div className="text text-overflow">{contact.email}</div>
@@ -109,29 +110,21 @@ class Contact extends Component {
           </List>
         </div>
 
-        <PartnerPopup
-          partnerPopupOpened={this.state.partnerPopupOpened}
-          closePopup={this.closePopup.bind(this)}
-          onClickSave={this.onClickSave.bind(this)}
-        />
+        <Popup opened={this.state.partnerPopupOpened}>
+          <Navbar>
+            <NavLeft className="nav-left-text">
+              <Link onClick={this.closePopup.bind(this)}>Cancel</Link>
+            </NavLeft>
+            <NavRight className="nav-right-text">
+              <Link onClick={this.onClickSave.bind(this)}>Save</Link>
+            </NavRight>
+          </Navbar>
+          <PartnerComponent ref={input => { this.partnerPopup = input }} editing={true} />
+        </Popup>
 
       </Page>
     )
   }
 }
-
-const PartnerPopup = (props) => (
-  <Popup opened={props.partnerPopupOpened}>
-    <Navbar>
-      <NavLeft className="nav-left-text">
-        <Link onClick={props.closePopup}>Cancel</Link>
-      </NavLeft>
-      <NavRight className="nav-right-text">
-        <Link onClick={props.onClickSave}>Save</Link>
-      </NavRight>
-    </Navbar>
-    <PartnerComponent editing={true} />
-  </Popup>
-)
 
 export default Contact

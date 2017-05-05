@@ -49,6 +49,7 @@ const MainViews = (props, context) => {
             <List>
               <ListItem link="/contacts/" title="Contacts"></ListItem>
               <ListItem link="/form/" title="Form"></ListItem>
+              <ListItem link="/about/" title="About"></ListItem>
             </List>
             <ContentBlock>
               <GridRow>
